@@ -3,9 +3,10 @@ trigger:
 
 variables:
   vmImage: 'agentPoolScaleSet1'  # Replace with your desired image
-  preInstallScript: |  # Script to run before build steps
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
-    source ~/.bashrc
+  # preInstallScript: |  # Script to run before build steps
+  #   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+  #   source ~/.bashrc
+
     # nvm install 20
 
 stages:
@@ -19,15 +20,15 @@ stages:
     variables:
     - group: PIPELINE_QA_DEV
     steps:
-    - task: CmdLine@2
+    - task: Bash@3
       displayName: 'Test dependency packages 1'
       inputs:
+        targetType: 'inline'
         script: |
-          sudo apt update -y
-          # Installs nvm (Node Version Manager)
-          echo "------------------------------------"
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+          source ~/.bashrc
           nvm -v
-          echo "------------------------------------"
+
     
 
 # - stage: Stage_Initialize_2
