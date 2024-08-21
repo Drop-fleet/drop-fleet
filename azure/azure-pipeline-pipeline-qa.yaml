@@ -27,6 +27,12 @@ stages:
         script: |
           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
           source ~/.bashrc
+          source /home/AzDevOps/.bashrc
+    - task: Bash@3
+      displayName: 'Test dependency packages 1'
+      inputs:
+        targetType: 'inline'
+        script: |
           nvm -v
 
     
