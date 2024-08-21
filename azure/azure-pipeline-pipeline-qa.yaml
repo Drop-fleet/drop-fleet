@@ -1,13 +1,13 @@
 trigger:
 - pipeline-qa-master
 
-pool:
-  vmImage: agentPoolScaleSet1
 
 stages:
 - stage: Stage_Initialize
   jobs:
   - job: job_initialize_1
+    pool:
+      vmImage: agentPoolScaleSet1
     variables:
     - group: PIPELINE_QA_DEV
     steps:
@@ -18,6 +18,8 @@ stages:
           echo "Hello world 1"
           
   - job: job_initialize_2
+    pool:
+      vmImage: agentPoolScaleSet1
     variables:
     - group: PIPELINE_QA_DEV
     steps:
