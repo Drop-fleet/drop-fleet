@@ -15,7 +15,7 @@ stages:
   - job: Pipeline_QA
     displayName: Initialize
     pool:
-      name: $(variables.vmImage)
+      name: $(vmImage)
     variables:
     - group: PIPELINE_QA_DEV
     steps:
