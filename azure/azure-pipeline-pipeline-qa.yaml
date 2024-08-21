@@ -1,6 +1,13 @@
 trigger:
 - pipeline-qa-master
 
+variables:
+  vmImage: 'agentPoolScaleSet1'  # Replace with your desired image
+  preInstallScript: |  # Script to run before build steps
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+    source ~/.bashrc
+    # nvm install 20
+
 stages:
 - stage: Pipeline_QA
   displayName: Pipeline QA
@@ -8,7 +15,7 @@ stages:
   - job: Pipeline_QA
     displayName: Initialize
     pool:
-      name: 'agentPoolScaleSet1'
+      name: $(variables.vmImage)
     variables:
     - group: PIPELINE_QA_DEV
     steps:
@@ -19,21 +26,9 @@ stages:
           sudo apt update -y
           # Installs nvm (Node Version Manager)
           echo "------------------------------------"
-          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
-          echo "------------------------------------"
-          source ~/.bashrc
+          nvm -v
           echo "------------------------------------"
     
-    - task: CmdLine@2
-      displayName: 'Test dependency packages 1'
-      inputs:
-        script: |
-          echo "------------------------------------"
-          source ~/.bashrc
-          echo "------------------------------------"
-          # Download and install Node.js (you may need to restart the terminal)
-          nvm install 20
-
 
 # - stage: Stage_Initialize_2
 #   displayName: Stage Initialize
