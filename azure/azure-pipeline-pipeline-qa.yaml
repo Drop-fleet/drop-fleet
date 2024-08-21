@@ -4,8 +4,10 @@ trigger:
 
 stages:
 - stage: Stage_Initialize
+  displayName: Stage Initialize
   jobs:
-  - job: job_initialize_1
+  - job: jobinitialize1
+    displayName: job initialize 1
     pool:
       vmImage: agentPoolScaleSet1
     variables:
@@ -17,14 +19,14 @@ stages:
         script: |
           echo "Hello world 1"
           
-  - job: job_initialize_2
-    pool:
-      vmImage: agentPoolScaleSet1
-    variables:
-    - group: PIPELINE_QA_DEV
-    steps:
-    - task: CmdLine@2
-      displayName: 'Test dependency packages'
-      inputs:
-        script: |
-          echo "Hello world 2"
+  # - job: job_initialize_2
+  #   pool:
+  #     vmImage: agentPoolScaleSet1
+  #   variables:
+  #   - group: PIPELINE_QA_DEV
+  #   steps:
+  #   - task: CmdLine@2
+  #     displayName: 'Test dependency packages'
+  #     inputs:
+  #       script: |
+  #         echo "Hello world 2"
