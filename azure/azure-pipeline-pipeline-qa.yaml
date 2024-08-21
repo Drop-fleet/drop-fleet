@@ -18,8 +18,11 @@ stages:
         script: |
           sudo apt update -y
           # Installs nvm (Node Version Manager)
+          echo "------------------------------------"
           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
-          source ~/.bashrc
+          echo "------------------------------------"
+          source /home/AzDevOps/.bashrc
+          echo "------------------------------------"
           # Download and install Node.js (you may need to restart the terminal)
           nvm install 20
           # Verifies the right Node.js version is in the environment
