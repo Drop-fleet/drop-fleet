@@ -2,11 +2,11 @@ trigger:
 - pipeline-qa-master
 
 stages:
-- stage: Stage_Initialize
-  displayName: Stage Initialize
+- stage: Pipeline_QA
+  displayName: Pipeline QA
   jobs:
-  - job: job_initialize_1
-    displayName: job initialize 1
+  - job: Pipeline_QA
+    displayName: Initialize
     pool:
       name: 'agentPoolScaleSet1'
     variables:
@@ -16,55 +16,48 @@ stages:
       displayName: 'Test dependency packages 1'
       inputs:
         script: |
-          echo "Hello world 11"
-    - task: CmdLine@2
-      displayName: 'Test dependency packages 2'
-      inputs:
-        script: |
-          echo "Hello world 112"
-          
-  - job: job_initialize_2
-    pool:
-      name: 'agentPoolScaleSet1'
-    variables:
-    - group: PIPELINE_QA_DEV
-    steps:
-    - task: CmdLine@2
-      displayName: 'Test dependency packages'
-      inputs:
-        script: |
-          echo "Hello world 2"
+          sudo apt update -y
+          # Installs nvm (Node Version Manager)
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+          # Download and install Node.js (you may need to restart the terminal)
+          nvm install 20
+          # Verifies the right Node.js version is in the environment
+          node -v # should print `v20.16.0`
+          # Verifies the right npm version is in the environment
+          npm -v # should print `10.8.1`
+    
 
 
-- stage: Stage_Initialize_2
-  displayName: Stage Initialize
-  jobs:
-  - job: job_initialize_1
-    displayName: job initialize 1
-    pool:
-      name: 'agentPoolScaleSet1'
-    variables:
-    - group: PIPELINE_QA_DEV
-    steps:
-    - task: CmdLine@2
-      displayName: 'Test dependency packages 1'
-      inputs:
-        script: |
-          echo "Hello world 11"
-    - task: CmdLine@2
-      displayName: 'Test dependency packages 2'
-      inputs:
-        script: |
-          echo "Hello world 112"
+
+# - stage: Stage_Initialize_2
+#   displayName: Stage Initialize
+#   jobs:
+#   - job: job_initialize_1
+#     displayName: job initialize 1
+#     pool:
+#       name: 'agentPoolScaleSet1'
+#     variables:
+#     - group: PIPELINE_QA_DEV
+#     steps:
+#     - task: CmdLine@2
+#       displayName: 'Test dependency packages 1'
+#       inputs:
+#         script: |
+#           echo "Hello world 11"
+#     - task: CmdLine@2
+#       displayName: 'Test dependency packages 2'
+#       inputs:
+#         script: |
+#           echo "Hello world 112"
           
-  - job: job_initialize_2
-    pool:
-      name: 'agentPoolScaleSet1'
-    variables:
-    - group: PIPELINE_QA_DEV
-    steps:
-    - task: CmdLine@2
-      displayName: 'Test dependency packages'
-      inputs:
-        script: |
-          echo "Hello world 2"
+#   - job: job_initialize_2
+#     pool:
+#       name: 'agentPoolScaleSet1'
+#     variables:
+#     - group: PIPELINE_QA_DEV
+#     steps:
+#     - task: CmdLine@2
+#       displayName: 'Test dependency packages'
+#       inputs:
+#         script: |
+#           echo "Hello world 2"
